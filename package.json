@@ -1,0 +1,24 @@
+{
+  "name": "testpup",
+  "version": "1.0.0",
+  "description": "node:test + Puppeteer. One test runner to run them all: unit and e2e. No config, no magic, meant to be customized. Fast as hell!",
+  "license": "ISC",
+  "author": "brine",
+  "engines": {
+    "node": ">=18"
+  },
+  "keywords": ["node--test", "testing", "puppeteer", "e2e", "unit", "chromium"],
+  "type": "module",
+  "main": "testpup.js",
+  "scripts": {
+    "test": "node --test --test-reporter spec 'tests/**/*.test.js'",
+    "test:unit": "node --test --test-reporter spec 'tests/unit/**/*.test.js'",
+    "test:e2e": "node --test --test-reporter spec 'tests/e2e/**/*.test.js'",
+    "test:debug": "HEADLESS=0 SLOMO=42 node --test --test-reporter spec 'tests/e2e/**/*.test.js'",
+    "pretty": "npx standard --fix",
+    "kill": "pkill -f chromium"
+  },
+  "dependencies": {
+    "puppeteer": "^24.37.5"
+  }
+}
