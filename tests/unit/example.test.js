@@ -1,17 +1,14 @@
 import { unit as test } from '../../testpup.js'
 
-test('assertDsl - basic coverage', t => {
-  t.is(1, 1)
-  t.not(1, 2)
-  t.deepEqual({ a: 1 }, { a: 1 })
-  t.ok(true)
-  t.falsy('')
-  t.match('testpup', /pup/)
-  t.contains('hello world', 'hello')
-  t.throws(() => { throw new Error('!') })
-  t.pass()
-})
-
-test('assertDsl - async', async t => {
+test('is', t => t.is(1, 1))
+test('not', t => t.not(1, 2))
+test('deepEqual', t => t.deepEqual({ a: 1 }, { a: 1 }))
+test('ok', t => t.ok(true))
+test('falsy', t => t.falsy(''))
+test('match', t => t.match('testpup', /pup/))
+test('contains', t => t.contains('hello world', 'hello'))
+test('throws', t => t.throws(() => { throw new Error('!') }))
+test('pass', t => t.pass())
+test('throwsAsync', async t => {
   await t.throwsAsync(Promise.reject(new Error('!')))
 })
