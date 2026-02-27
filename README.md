@@ -50,41 +50,6 @@ npm run test:debug # headed + 100ms slowMo, e2e only
 
 Tests live in `test/unit/` and `test/e2e/`. Files must match `*.test.js`.
 
-## Assert DSL (`t`)
-
-| Method | Description |
-|--------|-------------|
-| `t.is(a, b)` | Strict equality |
-| `t.not(a, b)` | Strict inequality |
-| `t.deepEqual(a, b)` | Deep strict equality |
-| `t.ok(val)` | Assert truthy |
-| `t.falsy(val)` | Assert falsy |
-| `t.match(str, re)` | Regex match |
-| `t.contains(hay, needle)` | String/array includes |
-| `t.throws(fn)` | Assert sync throw |
-| `t.throwsAsync(promise)` | Assert rejection |
-| `t.pass()` | Force pass |
-| `t.fail(msg)` | Force fail |
-
-## Browser DSL (`t`, e2e only)
-
-| Method | Description |
-|--------|-------------|
-| `t.page` | Raw Puppeteer `Page` |
-| `t.browser` | Raw Puppeteer `Browser` |
-| `t.goto(url)` | Navigate |
-| `t.url()` | Current URL |
-| `t.eval(fn, ...args)` | Run JS in browser |
-| `t.wait(ms)` | Sleep |
-| `t.waitFor(sel)` | Wait for selector |
-| `t.waitForNav(opts)` | Wait for navigation (`load`) |
-| `t.type(sel, text)` | Wait for selector, then type |
-| `t.waitAndClick(sel)` | Wait for selector, then click |
-| `t.exists(sel)` | Boolean — element exists? |
-| `t.count(sel)` | Count matching elements |
-| `t.getText(sel)` | Get `textContent` of element |
-| `t.hasClass(sel, cls)` | Element has CSS class? |
-
 ## e2e Options
 
 ```js
