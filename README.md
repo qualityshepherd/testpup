@@ -1,3 +1,5 @@
+[![Test](https://github.com/qualityshepherd/testpup/actions/workflows/test.yml/badge.svg?branch=main)](https://github.com/qualityshepherd/testpup/actions/workflows/test.yml)
+
 # testpup
 Minimal drop-in test setup: `node:test` + [Puppeteer](https://pptr.dev/). AVA-style assertions. No config, no magic. Meant to be customized to _your_ DSL.
 
