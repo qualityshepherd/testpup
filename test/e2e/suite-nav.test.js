@@ -1,4 +1,4 @@
-import { before, after, unit, launchBrowser } from '../../testpup.js'
+import { before, after, test, launchBrowser } from '../../testpup.js'
 import { loginPage, securePage } from './pages/internet.page.js'
 
 let t
@@ -10,12 +10,12 @@ before(async () => {
   await t.waitFor('h2')
 })
 
-after(() => t.browser.close())
-
-unit('e2e: secure area url is correct after login', async () => {
+test('e2e: secure area url is correct after login', async () => {
   t.contains(await t.url(), '/secure')
 })
 
-unit('e2e: secure area heading is correct after login', async () => {
+test('e2e: secure area heading is correct after login', async () => {
   t.contains(await securePage(t).heading(), 'Secure Area')
 })
+
+after(() => t.browser.close())

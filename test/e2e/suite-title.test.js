@@ -1,4 +1,4 @@
-import { before, after, unit, launchBrowser } from '../../testpup.js'
+import { before, after, test, launchBrowser } from '../../testpup.js'
 import { loginPage } from './pages/internet.page.js'
 
 let t
@@ -10,8 +10,8 @@ before(async () => {
   await t.waitFor('h2')
 })
 
-after(() => t.browser.close())
-
-unit('e2e: secure area displays correct page title after login', async () => {
+test('e2e: secure area displays correct page title after login', async () => {
   t.is(await t.eval(() => document.title), 'The Internet')
 })
+
+after(() => t.browser.close())

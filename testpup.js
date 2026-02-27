@@ -42,7 +42,7 @@ function puppeteerDsl (t, page, browser) {
   })
 }
 
-export { before, after, beforeEach, afterEach } from 'node:test'
+export { before, after, beforeEach, afterEach, test } from 'node:test'
 
 export async function launchBrowser (options = {}) {
   const browser = await puppeteer.launch({
