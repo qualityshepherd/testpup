@@ -5,6 +5,7 @@ Minimal drop-in test setup: `node:test` + [Puppeteer](https://pptr.dev/). AVA-st
 
 ## FEATURES
 - e2e tests that run in seconds, not minutes
+- ONE dependency! 
 - `node:test` + Puppeteer — one runner for unit and e2e
 - designed for YOUR DSL — configure commands and asserts to match your style
 - page object pattern, shared browser suites, auto-retry, screenshots on failure
