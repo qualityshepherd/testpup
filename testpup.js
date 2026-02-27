@@ -77,7 +77,7 @@ export function e2e (name, testFn, options = {}) {
         return
       } catch (err) {
         if (attempt === maxRetries) {
-          const errDir = path.join(process.cwd(), 'tests/errors')
+          const errDir = path.join(process.cwd(), 'test/errors')
           await fs.mkdir(errDir, { recursive: true })
           await t.page.screenshot({ path: path.join(errDir, `err-${Date.now()}.png`), fullPage: true }).catch(() => {})
           throw err

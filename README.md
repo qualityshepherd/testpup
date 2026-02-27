@@ -1,19 +1,26 @@
-[![Test](https://github.com/qualityshepherd/testpup/actions/workflows/test.yml/badge.svg?branch=main)](https://github.com/qualityshepherd/testpup/actions/workflows/test.yml)
-
-# TESTPUP
-Combines Node's built-in test runner, `node:test` + [Puppeteer](https://pptr.dev/) for e2e testing. One test runner for unit and e2e tests. AVA-style assertions. No config, no magic. Meant to be customized to _your_ DSL.
+# testpup
+Minimal drop-in test setup: `node:test` + [Puppeteer](https://pptr.dev/). AVA-style assertions. No config, no magic. Meant to be customized to _your_ DSL.
 
 > brine says: [Playwright](https://playwright.dev/) and [TestCafe](https://testcafe.io/) are powerful but heavy, opinionated (in a bad way), and slow. testpup is ~80 lines you can read in 2 minutes, edit in 5, and run fast. One dep. No framework. Just Chromium. And don't even get started on Cypress (DO NOT USE THAT POS).
+
+## FEATURES
+- e2e tests that run in seconds, not minutes
+- `node:test` + Puppeteer — one runner for unit and e2e
+- designed for YOUR DSL — configure commands and asserts to match your style
+- page object pattern, shared browser suites, auto-retry, screenshots on failure
+- debug with env vars: `HEADLESS=0 SLOWMO=100`
+- single file, zero config, no classes, no opinions
+- CI ready out of the box
 
 ## Setup
 1. `npm install puppeteer --save-dev` to install puppeteer in your project
 1. Copy `testpup.js` into your project
 1. Add to your `package.json` scripts:
 ```json
-"test": "node --test --test-reporter spec 'tests/**/*.test.js'",
-"test:unit": "node --test --test-reporter spec 'tests/unit/**/*.test.js'",
-"test:e2e": "node --test --test-reporter spec 'tests/e2e/**/*.test.js'",
-"test:debug": "HEADLESS=0 SLOWMO=100 node --test --test-reporter spec 'tests/e2e/**/*.test.js'",
+"test": "node --test --test-reporter spec 'test/**/*.test.js'",
+"test:unit": "node --test --test-reporter spec 'test/unit/**/*.test.js'",
+"test:e2e": "node --test --test-reporter spec 'test/e2e/**/*.test.js'",
+"test:debug": "HEADLESS=0 SLOWMO=100 node --test --test-reporter spec 'test/e2e/**/*.test.js'",
 "kill": "pkill -f chromium"
 ```
 That's it. There's no step 4.
@@ -41,7 +48,7 @@ npm run test:e2e   # e2e only
 npm run test:debug # headed + 100ms slowMo, e2e only
 ```
 
-Tests live in `tests/unit/` and `tests/e2e/`. Files must match `*.test.js`.
+Tests live in `test/unit/` and `test/e2e/`. Files must match `*.test.js`.
 
 ## Assert DSL (`t`)
 
@@ -70,7 +77,7 @@ Tests live in `tests/unit/` and `tests/e2e/`. Files must match `*.test.js`.
 | `t.eval(fn, ...args)` | Run JS in browser |
 | `t.wait(ms)` | Sleep |
 | `t.waitFor(sel)` | Wait for selector |
-| `t.waitForNav(opts)` | Wait for navigation (`networkidle2`) |
+| `t.waitForNav(opts)` | Wait for navigation (`load`) |
 | `t.type(sel, text)` | Wait for selector, then type |
 | `t.waitAndClick(sel)` | Wait for selector, then click |
 | `t.exists(sel)` | Boolean — element exists? |
@@ -90,7 +97,7 @@ e2e('my test', async t => { ... }, {
 })
 ```
 
-Failed tests save a screenshot to `tests/errors/`. Leaked Chromium? `npm run kill`.
+Failed tests save a screenshot to `test/errors/`. Leaked Chromium? `npm run kill`.
 
 ## Shared Browser (suites)
 
@@ -131,7 +138,7 @@ unit('can see profile', async () => {
 Keep tests readable by wrapping page interactions in plain functions:
 
 ```js
-// tests/e2e/pages/login.page.js
+// test/e2e/pages/login.page.js
 export const loginPage = (t) => ({
   goto: () => t.goto('/login'),
   login: async (email, password) => {
@@ -143,7 +150,7 @@ export const loginPage = (t) => ({
 ```
 
 ```js
-// tests/e2e/checkout.test.js
+// test/e2e/checkout.test.js
 import { e2e as test } from '../../testpup.js'
 import { loginPage } from './pages/login.page.js'
 import { cartPage } from './pages/cart.page.js'
