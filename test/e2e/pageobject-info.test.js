@@ -1,9 +1,8 @@
 import { e2e as test } from '../../testpup.js'
-import { examplePage } from './pages/example.page.js'
+import { loginPage } from './pages/internet.page.js'
 
-test('e2e: page object - title + heading', async t => {
-  const example = examplePage(t)
-  await example.goto('https://example.com')
-  t.is(await example.getTitle(), 'Example Domain')
-  t.is(await example.getHeading(), 'Example Domain')
+test('e2e: login with valid credentials redirects to secure area', async t => {
+  await loginPage(t).goto()
+  await loginPage(t).login('tomsmith', 'SuperSecretPassword!')
+  t.ok(await loginPage(t).isLoggedIn())
 })

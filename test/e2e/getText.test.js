@@ -1,5 +1,6 @@
 import { e2e as test } from '../../testpup.js'
-test('e2e: getText', async t => {
+test('e2e: get text content of an element', async t => {
   await t.goto('https://example.com')
-  t.is(await t.getText('h1'), 'Example Domain')
+  const text = await t.getText('h1')
+  t.is(text, 'Example Domain')
 })

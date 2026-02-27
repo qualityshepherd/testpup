@@ -51,6 +51,7 @@ export async function launchBrowser (options = {}) {
     args: ['--no-sandbox']
   })
   const page = await browser.newPage()
+  page.on('dialog', dialog => dialog.dismiss())
   page.setDefaultTimeout(options.timeout ?? 10000)
   const t = {}
   assertDsl(t)

@@ -1,5 +1,6 @@
 import { e2e as test } from '../../testpup.js'
-test('e2e: eval', async t => {
+test('e2e: evaluate javascript in the browser', async t => {
   await t.goto('https://example.com')
-  t.is(await t.eval(() => document.title), 'Example Domain')
+  const title = await t.eval(() => document.title)
+  t.is(title, 'Example Domain')
 })
