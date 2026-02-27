@@ -1,5 +1,5 @@
 import { e2e as test } from '../../testpup.js'
-test('link goes to iana.org', async t => {
+test('e2e: link goes to iana.org', async t => {
   await t.goto('https://example.com')
   const nav = t.waitForNav()
   await t.waitAndClick('a')
