@@ -1,9 +1,14 @@
 // pages live here until it gets too big — then split by feature
 const BASE = 'https://the-internet.herokuapp.com'
 
+const credentials = {
+  admin: { user: 'tomsmith', pass: 'SuperSecretPassword!' }
+}
+
 export const loginPage = (t) => ({
   goto: () => t.goto(`${BASE}/login`),
-  login: async (user, pass) => {
+  loginAs: async (role) => {
+    const { user, pass } = credentials[role]
     await t.type('#username', user)
     await t.type('#password', pass)
     const nav = t.waitForNav()

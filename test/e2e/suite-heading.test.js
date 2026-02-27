@@ -5,14 +5,15 @@ let t
 
 before(async () => {
   t = await launchBrowser()
-  await loginPage(t).goto()
-  await loginPage(t).login('tomsmith', 'SuperSecretPassword!')
+  const login = loginPage(t)
+  await login.goto()
+  await login.loginAs('admin')
   await t.waitFor('h2')
 })
+
+after(() => t.browser.close())
 
 test('e2e: secure area displays correct heading after login', async () => {
   t.ok(await t.exists('h2'))
   t.contains(await securePage(t).heading(), 'Secure Area')
 })
-
-after(() => t.browser.close())

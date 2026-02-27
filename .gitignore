@@ -1,4 +1,3 @@
 node_modules/
 .DS_Store
-tests/errors/
-tests/screenshots/
+test/errors/

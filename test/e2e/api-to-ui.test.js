@@ -2,25 +2,35 @@ import { before, e2e as test } from '../../testpup.js'
 import { loginPage, securePage } from './pages/internet.page.js'
 
 // The triple threat:
-// 1. fetch user data from API
-// 2. login to the UI
+// 1. authenticate via API, verify token
+// 2. login to the UI as the same user
 // 3. verify the session is real
 // No mocks. No fixtures. Real client → real server → real assertions.
 
-let user
+let token
 
 before(async () => {
-  const res = await fetch('https://jsonplaceholder.typicode.com/users/1')
-  user = await res.json()
+  const res = await fetch('https://dummyjson.com/auth/login', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ username: 'emilys', password: 'emilyspass' })
+  })
+  const data = await res.json()
+  token = data.accessToken
 })
 
-test('e2e: get user from api then login and verify secure area loads', async t => {
-  t.ok(user.name)
+test('e2e: authenticate via api then login to ui and verify secure area', async t => {
+  const login = loginPage(t)
+  const secure = securePage(t)
 
-  await loginPage(t).goto()
-  await loginPage(t).login('tomsmith', 'SuperSecretPassword!')
+  // API auth worked
+  t.ok(token)
 
-  t.ok(await loginPage(t).isLoggedIn())
-  t.ok(await securePage(t).isAt())
-  t.contains(await securePage(t).heading(), 'Secure Area')
+  // now login to the UI as the same user
+  await login.goto()
+  await login.loginAs('admin')
+
+  t.ok(await login.isLoggedIn())
+  t.ok(await secure.isAt())
+  t.contains(await secure.heading(), 'Secure Area')
 })
